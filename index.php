@@ -1,48 +1,21 @@
-
 <?php
-class Ingredient {
-    private $name; 
-    private $cost;
-    function __construct($_name, $_cost) {
-        $this->name = $_name;
-        $this->cost = $_cost;
-    } 
-    public function GetName() {
-        return $this->name;
-    }
-    public function GetCost() {
-        return $this->cost;
-    }
-    public function SetCost($newCost) {
-        $this->cost = $newCost;
-    } 
-}
-class Dish {
-    private $ingredients = array();
-    function AddIngredient($_ingredient) {
-        if ($_ingredient instanceof Ingredient) {
-            $ingredients[] = $_ingredient;
-            echo "Ingredient ", count($ingredients);
-        } 
-        else {
-            echo "No Ingredient !";
-            return false;}
-    }
-}
-//Ingredient::GetName() 
-// function Ingredient::GetCost() {
-//     return $cost;
-// }
-// Ingredient::SetCost($newCost) {
-
-// }
-
+require_once "ingredient.php"; 
+require_once "dish.php";
+    
 $cake = new Ingredient("Tort", 10);
-echo $cake->GetName(), $cake->GetCost();
-$cake->SetCost(20);
-var_dump($cake);
+echo $cake->GetName(), $cake->GetCost(), PHP_EOL;
+//Проверка изменить стоимость нечислом
+$cake->SetCost("5d20");
 $dish = new Dish;
 $dish->AddIngredient($cake);
 $salo = new Ingredient("Salo", 100);
 $dish->AddIngredient($salo);
-var_dump($dish);
+//Проверка добавить не Ingredient
+$dish->AddIngredient("Pepper");
+echo "Total: ", $dish->GetTotal(), PHP_EOL;
+$dish2 = new Dish([new Ingredient("Apple", 5), new Ingredient("Salt", 1)]);
+var_dump($dish2);
+$dish3 = new Dish(new Ingredient("Sugar", 25));
+var_dump($dish3);
+$dish4 = new Dish([new Ingredient("Milk", 17), 123123]);
+var_dump($dish4);
